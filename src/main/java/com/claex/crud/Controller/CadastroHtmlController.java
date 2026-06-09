@@ -2,25 +2,25 @@ package com.claex.crud.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.RestController;
 import com.claex.crud.Entity.CadastroEntity;
 import com.claex.crud.Service.CadastroService;
-@Controller
+
+@RestController
 @RequestMapping("/form_cadastro-html")
 public class CadastroHtmlController {
 
     @Autowired
     private CadastroService service;
 
-    // CREATE
     @PostMapping("/salvar")
-    @ResponseBody
     public ResponseEntity<String> salvarCadastro(
         @RequestParam String nome,
         @RequestParam String email,
@@ -36,16 +36,12 @@ public class CadastroHtmlController {
         return ResponseEntity.ok("Cadastro realizado com sucesso!");
     }
 
-    // LIST
     @GetMapping("/listar")
-    @ResponseBody
     public ResponseEntity<?> listarTodos() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
-    // UPDATE
     @PutMapping("/atualizar/{id}")
-    @ResponseBody
     public ResponseEntity<String> atualizar(
         @PathVariable Long id,
         @RequestParam String nome,
@@ -60,9 +56,7 @@ public class CadastroHtmlController {
         return ResponseEntity.ok("Atualizado com sucesso!");
     }
 
-    // DELETE
     @DeleteMapping("/deletar/{id}")
-    @ResponseBody
     public ResponseEntity<String> deletar(@PathVariable Long id) {
         service.deletar(id);
         return ResponseEntity.ok("Deletado com sucesso!");
