@@ -14,10 +14,11 @@ import com.claex.crud.Service.CadastroService;
 @Controller
 @RequestMapping("/form_cadastro-html")
 public class CadastroHtmlController {
-  @Autowired
+
+    @Autowired
     private CadastroService service;
 
-    // CREATE - salva no banco e retorna JSON para o fetch do HTML
+    // CREATE
     @PostMapping("/salvar")
     @ResponseBody
     public ResponseEntity<String> salvarCadastro(
@@ -31,16 +32,39 @@ public class CadastroHtmlController {
         cadastro.setEmail(email);
         cadastro.setSenha(senha);
         cadastro.setTipo(tipo);
-
         service.salvar(cadastro);
         return ResponseEntity.ok("Cadastro realizado com sucesso!");
     }
 
-    // LIST - lista todos os cadastros
+    // LIST
     @GetMapping("/listar")
     @ResponseBody
     public ResponseEntity<?> listarTodos() {
         return ResponseEntity.ok(service.listarTodos());
     }
-}
 
+    // UPDATE
+    @PutMapping("/atualizar/{id}")
+    @ResponseBody
+    public ResponseEntity<String> atualizar(
+        @PathVariable Long id,
+        @RequestParam String nome,
+        @RequestParam String senha,
+        @RequestParam(required = false, defaultValue = "aluno") String tipo
+    ) {
+        CadastroEntity cadastro = service.buscarPorId(id);
+        cadastro.setNome(nome);
+        cadastro.setSenha(senha);
+        cadastro.setTipo(tipo);
+        service.salvar(cadastro);
+        return ResponseEntity.ok("Atualizado com sucesso!");
+    }
+
+    // DELETE
+    @DeleteMapping("/deletar/{id}")
+    @ResponseBody
+    public ResponseEntity<String> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.ok("Deletado com sucesso!");
+    }
+}
