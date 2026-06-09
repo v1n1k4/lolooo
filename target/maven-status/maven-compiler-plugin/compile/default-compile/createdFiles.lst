@@ -1,0 +1,6 @@
+com\claex\crud\Controller\CadastroHtmlController.class
+com\claex\crud\Controller\LoginController.class
+com\claex\crud\Service\CadastroService.class
+com\claex\crud\Repository\CadastroRepository.class
+com\claex\crud\CrudApplication.class
+com\claex\crud\Entity\CadastroEntity.class
